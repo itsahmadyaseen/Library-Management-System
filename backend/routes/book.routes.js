@@ -7,6 +7,7 @@ import {
   deleteBook,
   getAllBooks,
   getBookById,
+  searchBooks,
   updateBook,
 } from "../controllers/book.controller.js";
 import upload from "../middlewares/multer.middleware.js";
@@ -22,6 +23,7 @@ router.post(
 );
 router.get("/fetch-books", verifyJWT, getAllBooks);
 router.get("/fetch-book/:bookId", verifyJWT, getBookById);
+router.get("/search", verifyJWT, searchBooks);
 router.patch(
   "/update-book/:bookId",
   verifyJWT,
