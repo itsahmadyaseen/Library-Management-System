@@ -18,19 +18,13 @@ const transactionSchema = new mongoose.Schema(
     },
     returnDate: {
       type: Date,
-      default: Date.now(),
     },
     status: {
       type: String,
       enum: ["borrowed", "returned"],
       default: "borrowed",
     },
-    borrowedBooks: [
-      {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Transaction",
-      },
-    ],
+    
   },
   { timestamps: true }
 );
