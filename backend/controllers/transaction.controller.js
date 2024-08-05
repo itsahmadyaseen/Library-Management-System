@@ -2,8 +2,8 @@ import Book from "../models/book.model.js";
 import Transaction from "../models/transaction.model.js";
 
 export const borrowBook = async (req, res) => {
-  const userId = req.user.id;
-  const bookId = req.params.bookId;
+  const userId = req.body.userId;
+  const bookId = req.body.bookId;
 
   const today = new Date();
   const returnDate = new Date(today);
@@ -15,8 +15,8 @@ export const borrowBook = async (req, res) => {
     if (bookDetails.status === "borrowed") {
       console.log("Book is not available :", bookDetails.status);
       return res
-        .status(400)
-        .json({ message: "Book is not available", data: null });
+        .status(200)
+        .json({ message: "Book is not available", data: null ,status:'borrowed'});
     }
 
     const newBorrow = new Transaction({
@@ -44,11 +44,21 @@ export const borrowBook = async (req, res) => {
 };
 
 export const returnBook = async (req, res) => {
-  const userId = req.user.id;
-  const bookId = req.params.bookId;
+  const userId = req.body.userId;
+  const bookId = req.body.bookId;
+  console.log(bookId);
+  console.log(userId);
+  
 
   try {
     const bookDetails = await Book.findById(bookId).select("status");
+    if(!bookDetails ){
+      console.log("Book is not available ");
+      return res
+        .status(404)
+        .json({ message: "Book is not available ",  });
+    
+    }
     if (bookDetails.status === "available") {
       console.log("Book is already available :", bookDetails.status);
       return res
@@ -63,7 +73,6 @@ export const returnBook = async (req, res) => {
     await Book.findByIdAndUpdate(
       bookId,
       { status: "available" }
-      //new:true is used to output a the new updated doc in var else it will ouput the previous doc
     );
 
     console.log("Book Returned ");
@@ -78,9 +87,15 @@ export const returnBook = async (req, res) => {
 
 export const getBorrowedBooks = async (req, res) => {
   try {
-    const books = await Transaction.find({ user: req.user.id }).populate(
-      "book"
-    );
+    const books = await Transaction.find({ user: req.user.id })
+      .populate("book")
+      .populate({
+        path: "book",
+        populate: {
+          path: "borrower",
+          model: "User",
+        },
+      });
     console.log("Fetched borrowed books:", books);
     return res
       .status(200)
@@ -93,3 +108,26 @@ export const getBorrowedBooks = async (req, res) => {
   }
 };
 
+export const getAllBorrowedBooks = async (req, res) => {
+  try {
+    const books = await Transaction.find({ status: "borrowed" })
+      .populate("book")
+      .populate({
+        path: "book",
+        populate: {
+          path: "borrower",
+          model: "User",
+        },
+      });
+
+    console.log("Fetched all borrowed books:", books);
+    return res
+      .status(200)
+      .json({ message: "Fetched all borrowed books :", data: books });
+  } catch (error) {
+    console.log("Error fething borrowed book :", error);
+    return res
+      .status(500)
+      .json({ message: "Error fething borrowed book :", data: error });
+  }
+};
