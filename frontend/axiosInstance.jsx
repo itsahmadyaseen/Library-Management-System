@@ -22,9 +22,9 @@ axiosInstance.interceptors.request.use(
 axiosInstance.interceptors.response.use(
   (response) => response,
   (error) => {
-    if (error.response && error.response.status === 403) {
-      window.location.href = `/unauthorized`;
-    }
+    // console.error(error.response);
+
+    return Promise.reject(error);
   }
 );
 

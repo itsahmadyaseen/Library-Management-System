@@ -49,7 +49,11 @@ export const loginUser = async (req, res) => {
 
   bcrypt.compare(password, user.password, (err, data) => {
     if (data) {
-      const authClaims = { id: user.id, username: user.username, role:user.role };
+      const authClaims = {
+        id: user.id,
+        username: user.username,
+        role: user.role,
+      };
       const token = jwt.sign(authClaims, process.env.SECRET_KEY, {
         expiresIn: "1d",
       });
@@ -68,7 +72,12 @@ export const loginUser = async (req, res) => {
 
 export const getUserDetails = async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select("-password");
+    const user = await User.findById(req.user.id)
+      .populate({
+        path: "borrowedBooks",
+        select:"title author genre"
+      })
+      .select("-password");
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -82,13 +91,27 @@ export const getUserDetails = async (req, res) => {
 
 export const getAllUsers = async (req, res) => {
   try {
-    const users = await User.find().sort({createdAt:-1})
+    const users = await User.find().sort({ createdAt: -1 });
+
     console.log("Users fetched", users);
-      res.status(200).json({ message: "Users fetched",data: users });
-    
+    res.status(200).json({ message: "Users fetched", data: users });
   } catch (error) {
     console.log("Error fetching users", error);
     res.status(500).json({ message: "Error fetching users", error });
-  
   }
-}
+};
+
+export const logout = async (req, res) => {
+  try {
+    res.cookie("token", "", {
+      maxAge: 0,
+      httpOnly: true,
+      secure: true,
+    });
+    console.log("User logged out");
+    res.status(200).json({ message: "User logged out" });
+  } catch (error) {
+    console.log("Error logging out", error);
+    res.status(500).json({ message: "Error logging out", error });
+  }
+};

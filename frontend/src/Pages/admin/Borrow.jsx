@@ -4,10 +4,11 @@ import axiosInstance from "../../../axiosInstance";
 const Borrow = () => {
   const [books, setBooks] = useState([]);
   const [users, setUsers] = useState([]);
+  const [transactionHistory, setTransactionHistory] = useState([]);
   const [selectedBook, setSelectedBook] = useState("");
   const [selectedUser, setSelectedUser] = useState("");
+  const [counter, setCounter] = useState(0);
   const [alreadyBorrowed, setAlreadyBorrowed] = useState(false);
-
 
   useEffect(() => {
     const fetchBooksAndUsers = async () => {
@@ -16,7 +17,6 @@ const Borrow = () => {
           axiosInstance.get("/books/fetch-books"),
           axiosInstance.get("/users/fetch-all-users"),
         ]);
-+
         setBooks(booksResponse.data.data);
         setUsers(usersResponse.data.data);
       } catch (error) {
@@ -24,6 +24,17 @@ const Borrow = () => {
       }
     };
 
+    const transactionHistory = async () => {
+      try {
+        const response = await axiosInstance.get("/transactions/history");
+        console.log(response.data);
+        setTransactionHistory(response.data.data);
+      } catch (error) {
+        console.log("Error fetching transaction history", error);
+      }
+    };
+
+    transactionHistory();
     fetchBooksAndUsers();
   }, []);
 
@@ -34,18 +45,22 @@ const Borrow = () => {
         bookId: selectedBook,
         userId: selectedUser,
       });
-      if(response.data.status === 'borrowed'){
-        setAlreadyBorrowed(true);
+      // console.log("response", response);
+
+      if (response && response.data) {
+        console.log("Borrowed book:", response.data);
+        setSelectedBook("");
+        setSelectedUser("");
       }
-      console.log(response);
-      
-      console.log("Borrowed book:", response.data);
-
-      setSelectedBook('');
-      setSelectedUser('');
-
+      setAlreadyBorrowed(false);
     } catch (error) {
-      console.log("Error borrowing book:", error);
+      // console.log("error : ", error);
+
+      if (error.response.status === 400) {
+        setAlreadyBorrowed(true);
+      } else {
+        console.error("Error borrowing book:", error.response.data);
+      }
     }
   };
 
@@ -96,11 +111,50 @@ const Borrow = () => {
           </button>
         </form>
       </div>
-      {alreadyBorrowed && (
-        <div className="text-2xl border-4 border-red-500 ">
+      <div>
+        {alreadyBorrowed && (
+          <div className="text-2xl border-4 border-red-500 ">
             <h2>Alert: Book was already borrowed by someone</h2>
+          </div>
+        )}
+      </div>
+      <div className="w-full">
+        <div className="w-full min-w-full bg-white rounded-lg shadow-md p-8 mb-6">
+          <h1 className="text-2xl font-bold mb-4">Recent Transactions</h1>
+          <table className="w-full bg-gray-100 rounded-lg shadow-md">
+            <thead>
+              <tr className="w-full bg-gray-800 text-white">
+                <th className="text-left py-2 px-4">S.No</th>
+                <th className="text-left py-2 px-4">Book Title</th>
+                <th className="text-left py-2 px-4">Member</th>
+                <th className="text-left py-2 px-4">Status</th>
+                <th className="text-left py-2 px-4">Borrow Data</th>
+                <th className="text-left py-2 px-4">Return Data</th>
+              </tr>
+            </thead>
+            <tbody>
+              {transactionHistory.map((transaction, index) => (
+                <tr key={transaction._id}>
+                  <td className="text-left py-2 px-4">{index + 1}</td>
+                  <td className="text-left py-2 px-4">
+                    {transaction.book.title}
+                  </td>
+                  <td className="text-left py-2 px-4">
+                    {transaction.user.fullname}
+                  </td>
+                  <td className="text-left py-2 px-4">{transaction.status}</td>
+                  <td className="text-left py-2 px-4">
+                    {new Date(transaction.borrowDate).toDateString()}
+                  </td>
+                  <td className="text-left py-2 px-4">
+                    {new Date(transaction.returnDate).toDateString()}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-      )}
+      </div>
     </div>
   );
 };

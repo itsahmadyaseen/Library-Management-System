@@ -12,6 +12,7 @@ import Signup from "./Components/Signup";
 import Profile from "./Components/Profile";
 import AddBook from "./Pages/Books/AddBook";
 import Borrow from "./Pages/admin/Borrow";
+import GetMembers from "./Pages/admin/GetMembers";
 
 const AppRoutes = () => {
   const location = useLocation();
@@ -33,7 +34,7 @@ const AppRoutes = () => {
         <Route path="/admin/manage-books" element={<ManageBooks />} />
         <Route path="/admin/borrow" element={<Borrow />} />
         <Route path="/admin/add-book" element={<AddBook />} />
-        <Route path="/admin/members" element={<ViewMembers />} />
+        <Route path="/admin/get-member" element={<GetMembers />} />
         {/* <Route path="/member/books" element={<ViewBooks />} />
         <Route path="/member/history" element={<BorrowHistory />} /> */}
         <Route path="/admin/return" element={<Return />} />

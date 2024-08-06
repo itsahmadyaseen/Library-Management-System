@@ -5,6 +5,7 @@ import {
   getAllBorrowedBooks,
   getBorrowedBooks,
   returnBook,
+  transactionHistory,
 } from "../controllers/transaction.controller.js";
 import { roleMiddleware } from "../middlewares/role.middleware.js";
 
@@ -19,5 +20,13 @@ router.get(
   roleMiddleware(["admin"]),
   getAllBorrowedBooks
 );
+
+router.get(
+  "/history",
+  verifyJWT,
+  roleMiddleware(["admin"]),
+  transactionHistory
+);
+
 
 export default router;

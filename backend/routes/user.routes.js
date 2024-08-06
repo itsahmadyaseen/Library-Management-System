@@ -3,6 +3,7 @@ import {
   getAllUsers,
   getUserDetails,
   loginUser,
+  logout,
   registerUser,
 } from "../controllers/user.controller.js";
 
@@ -20,5 +21,7 @@ router.get(
   roleMiddleware(["admin"]),
   getAllUsers
 );
+router.post("/logout", verifyJWT, logout);
+
 
 export default router;

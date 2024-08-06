@@ -1,8 +1,25 @@
 // src/components/Sidebar.js
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React from "react";
+import { Link, useNavigate } from "react-router-dom";
+import axiosInstance from "../../axiosInstance";
 
 const Sidebar = () => {
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    try {
+
+      await axiosInstance.post("/users/logout");
+      console.log("User logged out");
+
+      localStorage.removeItem("token");
+      localStorage.removeItem("id");
+      localStorage.removeItem("username");
+      navigate('/login');
+    } catch (error) {
+      console.log("Error logging out", error);
+    }
+  };
+
   return (
     <div className="h-screen w-64 bg-purple-900 text-white fixed p-6 text-lg">
       <div className="text-center mb-8">
@@ -10,25 +27,36 @@ const Sidebar = () => {
       </div>
       <ul>
         <li className="mb-3 p-1 hover:border rounded-sm border-black  hover:bg-purple-700">
-          <Link to="/profile" className="">Profile</Link>
+          <Link to="/profile" className="">
+            Profile
+          </Link>
         </li>
         <li className="mb-3 p-1 hover:border rounded-sm border-black  hover:bg-purple-700">
-          <Link to="/admin/add-book" className="">Add Book</Link>
+          <Link to="/admin/add-book" className="">
+            Add Book
+          </Link>
         </li>
         <li className="mb-3 p-1 hover:border rounded-sm border-blac  hover:bg-purple-700">
-          <Link to="/admin/add-transaction" className="">Add Transaction</Link>
+          <Link to="/admin/borrow" className="">
+            Borrow
+          </Link>
         </li>
         <li className="mb-3 p-1 hover:border rounded-sm border-black  hover:bg-purple-700">
-          <Link to="/admin/get-member" className="">Get Member</Link>
+          <Link to="/admin/get-member" className="">
+            Get Member
+          </Link>
         </li>
+        
         <li className="mb-3 p-1 hover:border rounded-sm border-black  hover:bg-purple-700">
-          <Link to="/admin/add-member" className="">Add Member</Link>
+          <Link to="/admin/return" className="">
+            Return
+          </Link>
         </li>
-        <li className="mb-3 p-1 hover:border rounded-sm border-black  hover:bg-purple-700">
-          <Link to="/admin/return" className="">Return</Link>
-        </li>
-        <li className="mb-3 p-1 hover:border rounded-sm border-black  hover:bg-purple-700">
-          <Link to="/logout" className="">Log out</Link>
+        <li
+          onClick={()=>handleLogout()}
+          className="mb-3 p-1 hover:border rounded-sm border-black  hover:bg-purple-700"
+        >
+          Log out
         </li>
       </ul>
     </div>

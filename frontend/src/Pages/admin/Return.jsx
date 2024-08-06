@@ -29,6 +29,8 @@ const Return = () => {
         userId,
         bookId,
       });
+      console.log('Book returned');
+      
       setBorrowedBooks(borrowedBooks.filter((book) => book._id !== bookId));
     } catch (error) {
       console.error("Error returning book:", error);
