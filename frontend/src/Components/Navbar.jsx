@@ -1,26 +1,44 @@
-
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from "react-router-dom";
+import axiosInstance from "../../axiosInstance";
 
 const Navbar = ({ role }) => {
+  const handleLogout = async () => {
+    try {
+      await axiosInstance.post("/users/logout");
+      localStorage.removeItem('id');
+      localStorage.removeItem('token');
+      localStorage.removeItem('role');
+      console.log("User logged out");
+    } catch (error) {
+      console.log("Error logging out", error);
+    }
+  };
+
   return (
-    <nav className="bg-blue-500 p-4 text-white">
+    <nav className="bg-purple-700 p-4 text-white">
       <div className="container mx-auto flex justify-between">
         <h1 className="text-xl font-bold">Library Management System</h1>
         <div>
-          <Link className="mr-4" to="/">Home</Link>
-          {role === 'admin' && (
-            <>
-              <Link className="mr-4" to="/admin/manage-books">Manage Books</Link>
-              <Link className="mr-4" to="/admin/members">View Members</Link>
-            </>
-          )}
-          {role === 'member' && (
-            <>
-              <Link className="mr-4" to="/member/books">View Books</Link>
-              <Link className="mr-4" to="/member/history">Borrow History</Link>
-            </>
-          )}
-          <Link to="/logout">Logout</Link>
+          <>
+          <Link className="mr-4" to="/profile">
+              Profile
+            </Link>
+            <Link className="mr-4" to="/view-books">
+              View Books
+            </Link>
+            <Link className="mr-4" to="/member/transactions">
+              Transactions
+            </Link>
+          </>
+
+          <Link
+            onClick={() => {
+              handleLogout();
+            }}
+            to="/login"
+          >
+            Logout
+          </Link>
         </div>
       </div>
     </nav>

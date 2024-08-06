@@ -31,9 +31,11 @@ const Login = () => {
 
       const token = response.data.token;
       const id = response.data.id;
+      const role = response.data.role;
 
       localStorage.setItem("id", id);
       localStorage.setItem("token", token);
+      localStorage.setItem("role", role);
       console.log("token: ", token);
 
       //cookie approach

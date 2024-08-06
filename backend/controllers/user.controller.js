@@ -62,7 +62,7 @@ export const loginUser = async (req, res) => {
       });
       console.log("User logged in ");
       console.log("token: ", token);
-      return res.status(200).json({ id: user.id, token: token });
+      return res.status(200).json({ id: user.id, token: token, role: user.role });
     } else {
       console.log("Invalid password", err);
       return res.status(400).json({ message: "Invalid password", data: err });

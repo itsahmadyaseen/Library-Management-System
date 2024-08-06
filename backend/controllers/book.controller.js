@@ -121,8 +121,8 @@ export const updateBook = async (req, res) => {
         });
       }
 
-      coverImagePath = await uploadOnCloudinary(coverImageLocalPath);
-      if (!thumbnailPath) {
+      coverImagePath = await UploadOnCloudinary(coverImageLocalPath);
+      if (!coverImagePath) {
         console.log("Cannot get coverImage path from Cloudinary");
         return res.status(500).json({ message: "Thumbnail upload failed" });
       }

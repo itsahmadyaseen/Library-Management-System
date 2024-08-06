@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../axiosInstance";
+import AlertBox from "../../Components/AlertBox";
 
 const Borrow = () => {
   const [books, setBooks] = useState([]);
@@ -7,8 +8,8 @@ const Borrow = () => {
   const [transactionHistory, setTransactionHistory] = useState([]);
   const [selectedBook, setSelectedBook] = useState("");
   const [selectedUser, setSelectedUser] = useState("");
-  const [counter, setCounter] = useState(0);
   const [alreadyBorrowed, setAlreadyBorrowed] = useState(false);
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     const fetchBooksAndUsers = async () => {
@@ -48,6 +49,8 @@ const Borrow = () => {
       // console.log("response", response);
 
       if (response && response.data) {
+        setShowAlert(true);
+
         console.log("Borrowed book:", response.data);
         setSelectedBook("");
         setSelectedUser("");
@@ -109,6 +112,8 @@ const Borrow = () => {
           >
             Borrow Book
           </button>
+          <AlertBox message="Book Borrowed!" showAlert={showAlert} />
+   
         </form>
       </div>
       <div>

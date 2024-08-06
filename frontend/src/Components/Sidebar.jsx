@@ -26,9 +26,19 @@ const Sidebar = () => {
         <h1 className="text-2xl font-bold">LMS</h1>
       </div>
       <ul>
+      <li className="mb-3 p-1 hover:border rounded-sm border-black  hover:bg-purple-700">
+          <Link to="/ " className="">
+            Home
+          </Link>
+        </li>
         <li className="mb-3 p-1 hover:border rounded-sm border-black  hover:bg-purple-700">
           <Link to="/profile" className="">
             Profile
+          </Link>
+        </li>
+        <li className="mb-3 p-1 hover:border rounded-sm border-black  hover:bg-purple-700">
+          <Link to="/admin/manage-books" className="">
+            Books Details
           </Link>
         </li>
         <li className="mb-3 p-1 hover:border rounded-sm border-black  hover:bg-purple-700">
@@ -54,7 +64,7 @@ const Sidebar = () => {
         </li>
         <li
           onClick={()=>handleLogout()}
-          className="mb-3 p-1 hover:border rounded-sm border-black  hover:bg-purple-700"
+          className="mb-3 p-1 cursor-pointer hover:border rounded-sm border-black  hover:bg-purple-700"
         >
           Log out
         </li>

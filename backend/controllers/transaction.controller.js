@@ -96,15 +96,10 @@ export const returnBook = async (req, res) => {
 
 export const getBorrowedBooks = async (req, res) => {
   try {
-    const books = await Transaction.find({ user: req.user.id })
-      .populate("book")
-      .populate({
-        path: "book",
-        populate: {
-          path: "borrower",
-          model: "User",
-        },
-      });
+    const books = await Transaction.find({ user: req.user.id }).populate(
+      "book"
+    );
+
     console.log("Fetched borrowed books:", books);
     return res
       .status(200)
@@ -147,13 +142,13 @@ export const transactionHistory = async (req, res) => {
     const transactions = await Transaction.find()
       .sort({ updatedAt: -1 })
       .populate({
-        path: 'user',
-        select:'fullname'
+        path: "user",
+        select: "fullname",
       })
       .populate({
-        path:'book',
-        select:'title'
-      })
+        path: "book",
+        select: "title",
+      });
     console.log("Fetched transactions : ", transactions);
     return res
       .status(200)

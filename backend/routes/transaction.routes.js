@@ -28,5 +28,4 @@ router.get(
   transactionHistory
 );
 
-
 export default router;

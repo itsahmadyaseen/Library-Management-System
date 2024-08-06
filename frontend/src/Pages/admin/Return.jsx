@@ -1,8 +1,10 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../../axiosInstance";
+import AlertBox from "../../Components/AlertBox";
 
 const Return = () => {
   const [borrowedBooks, setBorrowedBooks] = useState([]);
+  const [showAlert, setShowAlert] = useState(false);
 
   useEffect(() => {
     const fetchBorrowedBooks = async () => {
@@ -29,9 +31,11 @@ const Return = () => {
         userId,
         bookId,
       });
-      console.log('Book returned');
-      
+      setShowAlert(true);
+      console.log("Book returned");
+
       setBorrowedBooks(borrowedBooks.filter((book) => book._id !== bookId));
+      
     } catch (error) {
       console.error("Error returning book:", error);
     }
@@ -77,6 +81,7 @@ const Return = () => {
                 >
                   Return
                 </button>
+                <AlertBox message="Book Returned!" showAlert={showAlert} />
               </td>
             </tr>
           ))}

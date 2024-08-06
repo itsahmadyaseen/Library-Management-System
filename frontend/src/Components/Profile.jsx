@@ -48,6 +48,7 @@ const Profile = () => {
       </div>
       <div>
         <div>
+          <h1 className="text-2xl">Borrowed Books</h1>
           {user.borrowedBooks && user.borrowedBooks.length > 0 ? (
             <table className="w-full mt-10 bg-gray-100 rounded-lg shadow-md">
               <thead>
