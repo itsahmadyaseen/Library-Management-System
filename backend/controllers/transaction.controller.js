@@ -71,15 +71,10 @@ export const returnBook = async (req, res) => {
     //     .json({ message: "Book is already available :", data: null });
     // }
 
-    const newTransaction = new Transaction({
-      user:userId,
-      book:bookId,
-      status:'returned',
-    })
 
     await Transaction.findOneAndUpdate(
       { user: userId, book: bookId, status: "borrowed" },
-      { status: "returned" }
+      { status: "returned", returnDate:Date.now() }
     );
 
     await Book.findByIdAndUpdate(bookId, { status: "available" });

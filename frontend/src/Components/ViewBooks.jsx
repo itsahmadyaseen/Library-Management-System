@@ -20,8 +20,9 @@ const ViewBooks = () => {
 
   return (
     <div>
-      <SearchBooks onSearchResults={setBooks}/>
-{}
+      <h2 className="text-2xl font-bold mb-2 text-center">Books</h2>
+      <SearchBooks onSearchResults={setBooks} />
+
       <BooksList books={books} />
     </div>
   );

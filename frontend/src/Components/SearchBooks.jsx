@@ -20,13 +20,13 @@ const SearchBooks = ({ onSearchResults }) => {
   };
 
   return (
-    <form onSubmit={handleSearch} className="flex  items-center p-4">
+    <form onSubmit={handleSearch} className="flex justify-center  items-center p-4">
       <input
         type="text"
         placeholder="Search by Title"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
-        className="mb-2 p-2 border rounded"
+        className="mb-2 p-2 w-1/2 border rounded"
       />
       {/* <input
         type="text"
