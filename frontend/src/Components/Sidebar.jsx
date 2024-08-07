@@ -5,6 +5,7 @@ import axiosInstance from "../../axiosInstance";
 
 const Sidebar = () => {
   const navigate = useNavigate();
+  const username = localStorage.getItem('username')
   const handleLogout = async () => {
     try {
 
@@ -14,6 +15,7 @@ const Sidebar = () => {
       localStorage.removeItem("token");
       localStorage.removeItem("id");
       localStorage.removeItem("username");
+      localStorage.removeItem("role");
       navigate('/login');
     } catch (error) {
       console.log("Error logging out", error);
@@ -24,6 +26,7 @@ const Sidebar = () => {
     <div className="h-screen w-64 bg-purple-900 text-white fixed p-6 text-lg">
       <div className="text-center mb-8">
         <h1 className="text-2xl font-bold">LMS</h1>
+        <h1 className="mt-2">{username}</h1>
       </div>
       <ul>
       <li className="mb-3 p-1 hover:border rounded-sm border-black  hover:bg-purple-700">

@@ -62,7 +62,14 @@ export const loginUser = async (req, res) => {
       });
       console.log("User logged in ");
       console.log("token: ", token);
-      return res.status(200).json({ id: user.id, token: token, role: user.role });
+      return res
+        .status(200)
+        .json({
+          id: user.id,
+          token: token,
+          role: user.role,
+          username: user.fullname,
+        });
     } else {
       console.log("Invalid password", err);
       return res.status(400).json({ message: "Invalid password", data: err });
@@ -75,7 +82,7 @@ export const getUserDetails = async (req, res) => {
     const user = await User.findById(req.user.id)
       .populate({
         path: "borrowedBooks",
-        select:"title author genre"
+        select: "title author genre",
       })
       .select("-password");
     if (!user) {

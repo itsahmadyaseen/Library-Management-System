@@ -25,6 +25,7 @@ const AppRoutes = () => {
   const isAuthPage =
     location.pathname === "/login" || location.pathname === "/signup";
   const role = localStorage.getItem("role");
+  
 
   return (
     <>
