@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axiosInstance from "../../axiosInstance";
 import BooksList from "../Pages/Books/BookList";
+import SearchBooks from "./SearchBooks";
 
 const ViewBooks = () => {
   const [books, setBooks] = useState([]);
@@ -19,6 +20,8 @@ const ViewBooks = () => {
 
   return (
     <div>
+      <SearchBooks onSearchResults={setBooks}/>
+{}
       <BooksList books={books} />
     </div>
   );
