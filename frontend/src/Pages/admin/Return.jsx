@@ -66,7 +66,7 @@ const Return = () => {
                 {new Date(transaction.borrowDate).toDateString()}
               </td>
               <td className="py-2 px-4">
-                {new Date(transaction.returnDate).toDateString()}
+                {transaction.retutnDate? new Date(transaction.returnDate).toDateString() : "N/A"}
               </td>
               <td className="py-2 px-4">{transaction.fine}</td>
               <td className="py-2 px-4">

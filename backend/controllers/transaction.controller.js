@@ -6,10 +6,6 @@ export const borrowBook = async (req, res) => {
   const userId = req.body.userId;
   const bookId = req.body.bookId;
 
-  const today = new Date();
-  const returnDate = new Date(today);
-  returnDate.setDate(returnDate.getDate() + 10);
-  const formattedReturnDate = returnDate.toISOString().split("T")[0];
 
   try {
     const bookDetails = await Book.findById(bookId).select("status");
@@ -55,8 +51,10 @@ export const borrowBook = async (req, res) => {
 export const returnBook = async (req, res) => {
   const userId = req.body.userId;
   const bookId = req.body.bookId;
-  console.log(bookId);
-  console.log(userId);
+  
+  const today = new Date();
+  const returnDate = new Date(today);
+  const formattedReturnDate = returnDate.toISOString().split("T")[0];
 
   try {
     const bookDetails = await Book.findById(bookId).select("status");
@@ -71,10 +69,9 @@ export const returnBook = async (req, res) => {
     //     .json({ message: "Book is already available :", data: null });
     // }
 
-
     await Transaction.findOneAndUpdate(
       { user: userId, book: bookId, status: "borrowed" },
-      { status: "returned", returnDate:Date.now() }
+      { status: "returned", returnDate: formattedReturnDate }
     );
 
     await Book.findByIdAndUpdate(bookId, { status: "available" });
@@ -101,7 +98,7 @@ export const getBorrowedBooks = async (req, res) => {
       "book"
     );
 
-    console.log("Fetched borrowed books:", books);
+    console.log("Fetched borrowed books");
     return res
       .status(200)
       .json({ message: "Fetched borrowed books :", data: books });
@@ -115,7 +112,7 @@ export const getBorrowedBooks = async (req, res) => {
 
 export const getAllBorrowedBooks = async (req, res) => {
   try {
-    const books = await Transaction.find({ status: "borrowed" })
+    let books = await Transaction.find({ status: "borrowed" })
       .populate("book")
       .populate({
         path: "book",
@@ -125,11 +122,19 @@ export const getAllBorrowedBooks = async (req, res) => {
           select: "fullname",
         },
       });
+    let fine;
+    books = books.map((book) => {
+      let plainBook = book.toObject();
+      fine = book.calculateFine();
+      plainBook.fine = fine;
+      console.log("fine", fine);
+      return plainBook;
+    });
 
-    console.log("Fetched all borrowed books:", books);
+    console.log("Fetched all borrowed books", books);
     return res
       .status(200)
-      .json({ message: "Fetched all borrowed books :", data: books });
+      .json({ message: "Fetched all borrowed books :", data: books, fine });
   } catch (error) {
     console.log("Error fething borrowed book :", error);
     return res

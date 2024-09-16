@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../../axiosInstance"; // Your axios instance
 
 const ManageBooks = () => {
   const [availableBooks, setAvailableBooks] = useState([]);
   const [borrowedBooks, setBorrowedBooks] = useState([]);
-  
+
   useEffect(() => {
     const fetchBooks = async () => {
       try {
         const [booksResponse, borrowedBooksResponse] = await Promise.all([
           axiosInstance.get("/books/fetch-books"), // Endpoint to fetch all books
-          axiosInstance.get("/transactions/fetch-all-borrowedBooks") // Endpoint to fetch all borrowed books
+          axiosInstance.get("/transactions/fetch-all-borrowedBooks"), // Endpoint to fetch all borrowed books
         ]);
-console.log(borrowedBooksResponse.data.data);
+        console.log(borrowedBooksResponse.data.data);
 
         setAvailableBooks(booksResponse.data.data);
         setBorrowedBooks(borrowedBooksResponse.data.data);
@@ -41,10 +41,12 @@ console.log(borrowedBooksResponse.data.data);
           <tbody>
             {availableBooks.map((book) => (
               <tr key={book._id}>
-                <td className="text-left py-2 px-4">{book.title }</td>
+                <td className="text-left py-2 px-4">{book.title}</td>
                 <td className="text-left py-2 px-4">{book.author}</td>
                 <td className="text-left py-2 px-4">{book.genre}</td>
-                <td className="text-left py-2 px-4">{new Date(book.publicationDate).toDateString()}</td>
+                <td className="text-left py-2 px-4">
+                  {new Date(book.publicationDate).toDateString()}
+                </td>
                 <td className="text-left py-2 px-4">{book.status}</td>
               </tr>
             ))}
@@ -62,20 +64,28 @@ console.log(borrowedBooksResponse.data.data);
               <th className="text-left py-2 px-4">From Date</th>
               <th className="text-left py-2 px-4">To Date</th>
               <th className="text-left py-2 px-4">Fine</th>
-              <th className="text-left py-2 px-4">Action</th>
             </tr>
           </thead>
           <tbody>
             {borrowedBooks.map((transaction) => (
               <tr key={transaction._id}>
-                <td className="text-left py-2 px-4">{transaction.book.title || 'N/A'}</td>
-                <td className="text-left py-2 px-4">{transaction.book.borrower ? transaction.book.borrower.fullname : "N/A"}</td>
-                <td className="text-left py-2 px-4">{new Date(transaction.borrowDate).toDateString() || 'N/A'}</td>
-                <td className="text-left py-2 px-4">{new Date(transaction.returnDate).toDateString() || 'N/A'}</td>
-                <td className="text-left py-2 px-4">{transaction.fine || "N/A"}</td>
                 <td className="text-left py-2 px-4">
-                  {/* Action buttons here */}
+                  {transaction.book.title || "N/A"}
                 </td>
+                <td className="text-left py-2 px-4">
+                  {transaction.book.borrower
+                    ? transaction.book.borrower.fullname
+                    : "N/A"}
+                </td>
+                <td className="text-left py-2 px-4">
+                  {new Date(transaction.borrowDate).toDateString() || "N/A"}
+                </td>
+                <td className="text-left py-2 px-4">
+                  {transaction.returnDate
+                    ? new Date(transaction.returnDate).toDateString()
+                    : "N/A"}
+                </td>
+                <td className="text-left py-2 px-4">{transaction.fine}</td>
               </tr>
             ))}
           </tbody>

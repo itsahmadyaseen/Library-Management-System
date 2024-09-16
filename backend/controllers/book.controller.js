@@ -5,7 +5,7 @@ export const getAllBooks = async (req, res) => {
   try {
     const books = await Book.find();
 
-    console.log("Books fetched:", books);
+    console.log("Books fetched");
     return res.status(200).json({ message: "Books fetched", data: books });
   } catch (error) {
     console.log("Error fething books:", error);
@@ -185,7 +185,7 @@ export const searchBooks = async (req, res) => {
     if (genre) query.genre = genre;
 
     const books = await Book.find(query);
-    console.log("Search result", books);
+    console.log("Search result fetched");
     return res.status(200).json({ message: "Books fetched", data: books });
   } catch (error) {
     console.log("Error fetching books", error);
