@@ -1,12 +1,12 @@
 // src/components/Sidebar.js
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axiosInstance from "../../axiosInstance";
 import { FiSidebar } from "react-icons/fi";
 import { useState } from "react";
 
 
 const Sidebar = () => {
-  const {isOpen, setIsOpen}  = useState();
+  const [isOpen, setIsOpen]  = useState(false);
   const navigate = useNavigate();
   const username = localStorage.getItem('username')
   const handleLogout = async () => {
@@ -33,16 +33,16 @@ const Sidebar = () => {
     <>
       <FiSidebar
         onClick={toggleSidebar}
-        className="sm:hidden p-1 h-10 w-16  text-black cursor-pointer top-4 left-1 z-50 rounded-sm"
+        className="sm:hidden p-1 h-10 w-16  text-black fixed cursor-pointer top-4 left-1 z-[50] rounded-sm"
       >
-        {isOpen ? "Close" : "Menu"}
+        
       </FiSidebar>
-      <div className="flex sm:block">
+      <div className="flex sm:block z-0" >
         {/* Sidebar */}
         <div
           className={`fixed top-0 left-0 h-full w-64 bg-purple-900 text-white p-5 transform ${
             isOpen ? "translate-x-0" : "-translate-x-full"
-          } transition-transform duration-300 ease-in-out sm:translate-x-0`}
+          } transition-transform duration-300 ease-in-out sm:translate-x-0 z-[10]`}
         >
           <h2 className="text-2xl font-bold mt-12 sm:mt-4">Sidebar</h2>
           <h1 className="mt-2">{username}</h1>

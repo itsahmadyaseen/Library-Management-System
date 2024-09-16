@@ -1,4 +1,3 @@
-import React from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -7,7 +6,7 @@ import {
 } from "react-router-dom";
 import Navbar from "./Components/Navbar";
 import ManageBooks from "./Pages/admin/ManageBooks";
-import ViewMembers from "./Pages/admin/ViewMembers";
+// import ViewMembers from "./Pages/admin/ViewMembers";
 import ViewBooks from "./Components/ViewBooks";
 // import BorrowHistory from './Pages/member/BorrowHistory';
 import Sidebar from "./Components/Sidebar";
@@ -29,11 +28,11 @@ const AppRoutes = () => {
 
   return (
     <>
-      <div className="">
+      <div className="relative">
         {!isAuthPage && role === "admin" && <Sidebar />}
         {!isAuthPage && role === "member" && <Navbar role={role} />}
         <div
-          className={`flex-1 ${!isAuthPage && role === "admin" ? "ml-64" : ""}`}
+          className={`flex-1 ${!isAuthPage && role === "admin" ? "ml-0" : ""} transition-all duration-300 ease-in-out`}
         >
           {/* Add margin-left if sidebar is present */}
 
