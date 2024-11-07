@@ -28,7 +28,6 @@ const Borrow = () => {
     const transactionHistory = async () => {
       try {
         const response = await axiosInstance.get("/transactions/history");
-        console.log(response.data);
         setTransactionHistory(response.data.data);
       } catch (error) {
         console.log("Error fetching transaction history", error);
@@ -46,19 +45,15 @@ const Borrow = () => {
         bookId: selectedBook,
         userId: selectedUser,
       });
-      // console.log("response", response);
 
       if (response && response.data) {
         setShowAlert(true);
 
-        console.log("Borrowed book:", response.data);
         setSelectedBook("");
         setSelectedUser("");
       }
       setAlreadyBorrowed(false);
     } catch (error) {
-      // console.log("error : ", error);
-
       if (error.response.status === 400) {
         setAlreadyBorrowed(true);
       } else {
@@ -113,7 +108,6 @@ const Borrow = () => {
             Borrow Book
           </button>
           <AlertBox message="Book Borrowed!" showAlert={showAlert} />
-   
         </form>
       </div>
       <div>

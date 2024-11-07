@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import axiosInstance from "../../axiosInstance";
 
-const Navbar = ({ role }) => {
+const Navbar = () => {
   const username = localStorage.getItem("username");
   const handleLogout = async () => {
     try {
@@ -19,13 +19,11 @@ const Navbar = ({ role }) => {
     <nav className="bg-purple-700 p-4 text-white">
       <div className="container mx-auto flex justify-between">
         <div className="flex">
-        <h1 className="text-xl font-bold">Library Management System</h1>
-        <h1 className="text-xl ml-4 font-semibold">{username}</h1>
-
+          <h1 className="text-xl font-bold">Library Management System</h1>
+          <h1 className="text-xl ml-4 font-semibold">{username}</h1>
         </div>
 
         <div>
-          
           <>
             <Link className="mr-4" to="/profile">
               Profile

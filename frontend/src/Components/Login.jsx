@@ -27,18 +27,17 @@ const Login = () => {
         formData,
         { withCredentials: true }
       );
-      console.log("Login successfull", response.data);
+      console.log("Login successfull");
 
       const token = response.data.token;
       const id = response.data.id;
       const role = response.data.role;
       const username = response.data.username;
-      
+
       localStorage.setItem("id", id);
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);
-      localStorage.setItem('username', username);
-      console.log("token: ", token);
+      localStorage.setItem("username", username);
 
       //cookie approach
 

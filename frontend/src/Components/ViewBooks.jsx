@@ -9,7 +9,6 @@ const ViewBooks = () => {
     const fetchBooks = async () => {
       try {
         const response = await axiosInstance.get("/books/fetch-books");
-        console.log(response.data);
         setBooks(response.data.data);
       } catch (error) {
         console.log("Error Fetching books", error);

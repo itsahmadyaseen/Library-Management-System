@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../../axiosInstance";
 import AlertBox from "../../Components/AlertBox";
 
@@ -12,7 +12,6 @@ const Return = () => {
         const response = await axiosInstance.get(
           "transactions/fetch-all-borrowedBooks"
         );
-        // console.log(response);
 
         setBorrowedBooks(response.data.data);
       } catch (error) {
@@ -25,8 +24,6 @@ const Return = () => {
 
   const handleReturn = async (bookId, userId) => {
     try {
-      // console.log(bookId, userId);
-
       await axiosInstance.post(`/transactions/return`, {
         userId,
         bookId,
@@ -35,7 +32,6 @@ const Return = () => {
       console.log("Book returned");
 
       setBorrowedBooks(borrowedBooks.filter((book) => book._id !== bookId));
-      
     } catch (error) {
       console.error("Error returning book:", error);
     }
@@ -66,7 +62,9 @@ const Return = () => {
                 {new Date(transaction.borrowDate).toDateString()}
               </td>
               <td className="py-2 px-4">
-                {transaction.retutnDate? new Date(transaction.returnDate).toDateString() : "N/A"}
+                {transaction.retutnDate
+                  ? new Date(transaction.returnDate).toDateString()
+                  : "N/A"}
               </td>
               <td className="py-2 px-4">{transaction.fine}</td>
               <td className="py-2 px-4">

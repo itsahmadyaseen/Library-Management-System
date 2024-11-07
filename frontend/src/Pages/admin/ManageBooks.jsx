@@ -12,7 +12,6 @@ const ManageBooks = () => {
           axiosInstance.get("/books/fetch-books"), // Endpoint to fetch all books
           axiosInstance.get("/transactions/fetch-all-borrowedBooks"), // Endpoint to fetch all borrowed books
         ]);
-        console.log(borrowedBooksResponse.data.data);
 
         setAvailableBooks(booksResponse.data.data);
         setBorrowedBooks(borrowedBooksResponse.data.data);

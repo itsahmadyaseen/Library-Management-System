@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import axiosInstance from "../../../axiosInstance";
 
 const Transaction = () => {
@@ -7,8 +7,9 @@ const Transaction = () => {
   useEffect(() => {
     const transactionHistory = async () => {
       try {
-        const response = await axiosInstance.get("/transactions/fetch-borrowedBooks");
-        console.log(response.data);
+        const response = await axiosInstance.get(
+          "/transactions/fetch-borrowedBooks"
+        );
         setTransactionHistory(response.data.data);
       } catch (error) {
         console.log("Error fetching transaction history", error);

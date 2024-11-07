@@ -1,18 +1,18 @@
-import React, { useState } from 'react'; // Ensure this points to your axios instance
-import axiosInstance from '../../axiosInstance';
+/* eslint-disable react/prop-types */
+import { useState } from "react"; // Ensure this points to your axios instance
+import axiosInstance from "../../axiosInstance";
 
 const SearchBooks = ({ onSearchResults }) => {
-  const [title, setTitle] = useState('');
-//   const [author, setAuthor] = useState('');
-//   const [genre, setGenre] = useState('');
+  const [title, setTitle] = useState("");
+  //   const [author, setAuthor] = useState('');
+  //   const [genre, setGenre] = useState('');
 
   const handleSearch = async (e) => {
     e.preventDefault();
 
     try {
-      const response = await axiosInstance.post('/books/search', { title });
-      console.log(response.data);
-      
+      const response = await axiosInstance.post("/books/search", { title });
+
       onSearchResults(response.data.data);
     } catch (error) {
       console.error("Error searching books", error);
@@ -20,7 +20,10 @@ const SearchBooks = ({ onSearchResults }) => {
   };
 
   return (
-    <form onSubmit={handleSearch} className="flex justify-center  items-center p-4">
+    <form
+      onSubmit={handleSearch}
+      className="flex justify-center  items-center p-4"
+    >
       <input
         type="text"
         placeholder="Search by Title"
