@@ -77,8 +77,6 @@ export const loginUser = async (req, res) => {
 
 export const getUserDetails = async (req, res) => {
   try {
-    console.log(req.user.id);
-
     const user = await User.findById(req.user.id)
       .populate({
         path: "borrowedBooks",
@@ -88,7 +86,7 @@ export const getUserDetails = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    console.log("Profile fetched", user);
+    console.log("Profile fetched");
     res.status(200).json({ message: "Profile fetched", data: user });
   } catch (error) {
     console.log("Error fetching user details", error);
