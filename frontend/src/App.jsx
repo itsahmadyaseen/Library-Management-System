@@ -32,7 +32,7 @@ const AppRoutes = () => {
         {!isAuthPage && role === "admin" && <Sidebar />}
         {!isAuthPage && role === "member" && <Navbar role={role} />}
         <div
-          className={`flex-1 ${!isAuthPage && role === "admin" ? "ml-0" : ""} transition-all duration-300 ease-in-out`}
+          className={`flex-1 ${!isAuthPage && role === "admin" ? "ml-0" : ""}  transition-all duration-300 ease-in-out`}
         >
           {/* Add margin-left if sidebar is present */}
 

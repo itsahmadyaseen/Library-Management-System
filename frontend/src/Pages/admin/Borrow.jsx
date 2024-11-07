@@ -68,7 +68,7 @@ const Borrow = () => {
   };
 
   return (
-    <div className="flex flex-col min-w-full items-center min-h-screen bg-gray-100 p-4">
+    <div className="flex flex-col min-w-full items-center max-h-screen  bg-gray-100 p-4">
       <div className="w-full max-w-full bg-white rounded-lg shadow-md p-8">
         <h1 className="text-2xl font-bold mb-4">Borrow Book</h1>
         <form onSubmit={handleSubmit} className="space-y-4">
@@ -124,7 +124,7 @@ const Borrow = () => {
         )}
       </div>
       <div className="w-full">
-        <div className="w-full min-w-full bg-white rounded-lg shadow-md p-8 mb-6">
+        <div className=" min-w-full bg-white rounded-lg shadow-md p-8 mb-6">
           <h1 className="text-2xl font-bold mb-4">Recent Transactions</h1>
           <table className="w-full bg-gray-100 rounded-lg shadow-md">
             <thead>

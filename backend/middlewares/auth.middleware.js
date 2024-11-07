@@ -14,8 +14,8 @@ export const verifyJWT = async (req, res, next) => {
   }
 
   try {
-    console.log(process.env.SECRET_KEY);
-    console.log(token);
+    // console.log(process.env.SECRET_KEY);
+    // console.log(token);
     
     const decodedToken = jwt.verify(token, process.env.SECRET_KEY);
     if (!decodedToken) {

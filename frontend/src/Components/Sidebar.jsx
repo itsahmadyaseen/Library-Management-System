@@ -4,14 +4,12 @@ import axiosInstance from "../../axiosInstance";
 import { FiSidebar } from "react-icons/fi";
 import { useState } from "react";
 
-
 const Sidebar = () => {
-  const [isOpen, setIsOpen]  = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const navigate = useNavigate();
-  const username = localStorage.getItem('username')
+  const username = localStorage.getItem("username");
   const handleLogout = async () => {
     try {
-
       await axiosInstance.post("/users/logout");
       console.log("User logged out");
 
@@ -19,7 +17,7 @@ const Sidebar = () => {
       localStorage.removeItem("id");
       localStorage.removeItem("username");
       localStorage.removeItem("role");
-      navigate('/login');
+      navigate("/login");
     } catch (error) {
       console.log("Error logging out", error);
     }
@@ -34,10 +32,8 @@ const Sidebar = () => {
       <FiSidebar
         onClick={toggleSidebar}
         className="sm:hidden p-1 h-10 w-16  text-black fixed cursor-pointer top-4 left-1 z-[50] rounded-sm"
-      >
-        
-      </FiSidebar>
-      <div className="flex sm:block z-0" >
+      ></FiSidebar>
+      <div className="flex sm:block z-0">
         {/* Sidebar */}
         <div
           className={`fixed top-0 left-0 h-full w-64 bg-purple-900 text-white p-5 transform ${

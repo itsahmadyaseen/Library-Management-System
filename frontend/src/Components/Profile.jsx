@@ -30,7 +30,7 @@ const Profile = () => {
   if (!user) return <p>No user data found</p>; // Handle case where user data is not available
 
   return (
-    <div className="flex flex-col items-center   bg-ble-200 h-screen">
+    <div className="flex flex-col items-center h-screen">
       <div className="text-left align-middle p-6 rounded-md shadow-md">
         <h2 className="text-2xl font-bold mb-4">My Profile</h2>
         <p className="text-black text-lg mb-2">
