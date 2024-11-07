@@ -41,7 +41,7 @@ export const loginUser = async (req, res) => {
   const { email, password } = req.body;
 
   const user = await User.findOne({ email });
-  
+
   if (!user) {
     console.log("Invalid email");
     return res.status(400).json({ message: "Invalid email" });
@@ -77,6 +77,8 @@ export const loginUser = async (req, res) => {
 
 export const getUserDetails = async (req, res) => {
   try {
+    console.log(req.user.id);
+
     const user = await User.findById(req.user.id)
       .populate({
         path: "borrowedBooks",
@@ -86,8 +88,8 @@ export const getUserDetails = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    console.log("Profile fetched : ");
-    res.status(200).json({ message: "Profile fetched" });
+    console.log("Profile fetched", user);
+    res.status(200).json({ message: "Profile fetched", data: user });
   } catch (error) {
     console.log("Error fetching user details", error);
     res.status(500).json({ message: "Error fetching user details", error });
