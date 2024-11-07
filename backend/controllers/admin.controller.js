@@ -3,7 +3,7 @@ import User from "../models/user.model.js";
 export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find().select("-password");
-    console.log("All users fetched : ", users);
+    console.log("All users fetched");
     res.status(200).json({ message: "All users fetched", users });
   } catch (error) {
     console.log("Error fetching users", error);
@@ -17,7 +17,7 @@ export const updateRole = async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    console.log("Invalid email", email);
+    console.log("Invalid email");
     return res.status(400).json({ message: "Invalid email" });
   }
 

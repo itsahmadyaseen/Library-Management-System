@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import axiosInstance from "../../../axiosInstance";
 import { useNavigate } from "react-router-dom";
 
@@ -32,12 +32,11 @@ const AddBook = () => {
     data.append("status", formData.status);
 
     try {
-      const response = await axiosInstance.post("/books/add-book", data, {
+      await axiosInstance.post("/books/add-book", data, {
         headers: {
           "Content-Type": "multipart/form-data",
         },
       });
-      console.log("Book added successfully:", response.data);
       navigate("/admin/manage-books");
     } catch (error) {
       console.log("Error adding book:", error);

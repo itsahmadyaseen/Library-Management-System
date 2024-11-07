@@ -12,7 +12,7 @@ export const registerUser = async (req, res) => {
   try {
     const existingUser = await User.findOne({ username });
     if (existingUser) {
-      console.log("User already exist", existingUser);
+      console.log("User already exist");
       return res.status(400).json({ message: "User already exist" });
     }
 
@@ -27,8 +27,8 @@ export const registerUser = async (req, res) => {
     });
 
     await newUser.save();
-    console.log("User registered", newUser);
-    return res.status(201).json({ message: "User registered", data: newUser });
+    console.log("User registered");
+    return res.status(201).json({ message: "User registered" });
   } catch (error) {
     console.log("Error registering user", error);
     return res
@@ -42,7 +42,7 @@ export const loginUser = async (req, res) => {
 
   const user = await User.findOne({ email });
   if (!user) {
-    console.log("Invalid email", email);
+    console.log("Invalid email");
     return res.status(400).json({ message: "Invalid email" });
   }
 
@@ -59,16 +59,14 @@ export const loginUser = async (req, res) => {
       res.cookie("token", token, {
         httpOnly: true,
       });
-      console.log("User logged in ");
-      console.log("token: ", token);
-      return res
-        .status(200)
-        .json({
-          id: user.id,
-          token: token,
-          role: user.role,
-          username: user.fullname,
-        });
+      console.log("User logged in");
+      // console.log("token: ", token);
+      return res.status(200).json({
+        id: user.id,
+        token: token,
+        role: user.role,
+        username: user.fullname,
+      });
     } else {
       console.log("Invalid password", err);
       return res.status(400).json({ message: "Invalid password", data: err });
@@ -87,8 +85,8 @@ export const getUserDetails = async (req, res) => {
     if (!user) {
       return res.status(404).json({ message: "User not found" });
     }
-    console.log("Profile fetched : ", user);
-    res.status(200).json({ message: "Profile fetched", data: user });
+    console.log("Profile fetched : ");
+    res.status(200).json({ message: "Profile fetched" });
   } catch (error) {
     console.log("Error fetching user details", error);
     res.status(500).json({ message: "Error fetching user details", error });
@@ -99,7 +97,7 @@ export const getAllUsers = async (req, res) => {
   try {
     const users = await User.find().sort({ createdAt: -1 });
 
-    console.log("Users fetched", users);
+    console.log("Users fetched");
     res.status(200).json({ message: "Users fetched", data: users });
   } catch (error) {
     console.log("Error fetching users", error);

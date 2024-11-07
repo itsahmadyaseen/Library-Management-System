@@ -6,11 +6,10 @@ export const borrowBook = async (req, res) => {
   const userId = req.body.userId;
   const bookId = req.body.bookId;
 
-
   try {
     const bookDetails = await Book.findById(bookId).select("status");
     if (bookDetails.status === "borrowed") {
-      console.log("Book is not available :", bookDetails.status);
+      console.log("Book is not available :");
       return res.status(400).json({
         message: "Book is not available",
         data: null,
@@ -38,7 +37,7 @@ export const borrowBook = async (req, res) => {
       },
     });
 
-    console.log("Book borrowed :", newBorrow);
+    console.log("Book borrowed :");
     return res.status(201).json({ message: "Book borrowed", data: newBorrow });
   } catch (error) {
     console.log("Error borrowing book :", error);
@@ -51,7 +50,7 @@ export const borrowBook = async (req, res) => {
 export const returnBook = async (req, res) => {
   const userId = req.body.userId;
   const bookId = req.body.bookId;
-  
+
   const today = new Date();
   const returnDate = new Date(today);
   const formattedReturnDate = returnDate.toISOString().split("T")[0];
@@ -59,7 +58,7 @@ export const returnBook = async (req, res) => {
   try {
     const bookDetails = await Book.findById(bookId).select("status");
     if (!bookDetails) {
-      console.log("Book is not available ");
+      console.log("Book is not available");
       return res.status(404).json({ message: "Book is not available " });
     }
     // if (bookDetails.status === "available") {
@@ -82,8 +81,8 @@ export const returnBook = async (req, res) => {
       },
     });
 
-    console.log("Book Returned ");
-    return res.status(200).json({ message: "Book returned ", data: null });
+    console.log("Book Returned");
+    return res.status(200).json({ message: "Book returned " });
   } catch (error) {
     console.log("Error returning book :", error);
     return res
@@ -127,11 +126,11 @@ export const getAllBorrowedBooks = async (req, res) => {
       let plainBook = book.toObject();
       fine = book.calculateFine();
       plainBook.fine = fine;
-      console.log("fine", fine);
+      // console.log("fine", fine);
       return plainBook;
     });
 
-    console.log("Fetched all borrowed books", books);
+    console.log("Fetched all borrowed books");
     return res
       .status(200)
       .json({ message: "Fetched all borrowed books :", data: books, fine });
@@ -155,7 +154,7 @@ export const transactionHistory = async (req, res) => {
         path: "book",
         select: "title",
       });
-    console.log("Fetched transactions : ", transactions);
+    console.log("Fetched transactions : ");
     return res
       .status(200)
       .json({ message: "Fetched Transactions :", data: transactions });

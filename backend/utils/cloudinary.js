@@ -14,8 +14,8 @@ export const UploadOnCloudinary = async (coverImageLocalPath) => {
       resource_type: "auto",
     });
 
-    if (!response) console.log("Bad response", response);
-    console.log("response", response);
+    if (!response) console.log("Bad response");
+    // console.log("response", response);
     console.log("File uploaded on cloudinary");
     return response.secure_url;
   } catch (error) {

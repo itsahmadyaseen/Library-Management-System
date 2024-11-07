@@ -19,7 +19,7 @@ export const addBook = async (req, res) => {
   const { title, author, genre, publicationDate } = req.body;
 
   try {
-    console.log(req.file);
+    // console.log(req.file);
     const coverImageLocalPath = req.file?.path;
     if (!coverImageLocalPath) {
       console.log("Cannot get local file path");
@@ -46,8 +46,8 @@ export const addBook = async (req, res) => {
     });
 
     await newBook.save();
-    console.log("Book added", newBook);
-    res.status(201).json({ message: "Book added", data: newBook });
+    console.log("Book added");
+    res.status(201).json({ message: "Book added" });
   } catch (error) {
     console.log("Unable to add book", error);
     res.status(500).json({ message: "Unable to add book", data: error });
@@ -58,13 +58,10 @@ export const deleteBook = async (req, res) => {
   try {
     const bookId = req.params.bookId;
     const bookDetails = await Book.findById(bookId);
-    //   console.log(bookDetails.userId, userId);
 
     if (!bookDetails) {
-      console.log("Cannot find book", bookDetails);
-      return res
-        .status(404)
-        .json({ message: "Cannot find book", data: bookDetails });
+      console.log("Cannot find book");
+      return res.status(404).json({ message: "Cannot find book" });
     }
 
     if (bookDetails.imagePublicId) {
@@ -72,10 +69,9 @@ export const deleteBook = async (req, res) => {
         bookDetails.imagePublicId
       );
       if (deleteImageResult.result !== "ok") {
-        console.log("Failed to delete image on Cloudinary", deleteImageResult);
+        console.log("Failed to delete image on Cloudinary");
         return res.status(500).json({
           message: "Failed to delete image on Cloudinary",
-          data: deleteImageResult,
         });
       }
     }
@@ -147,8 +143,8 @@ export const updateBook = async (req, res) => {
       return res.status(500).json({ message: "Book update failed" });
     }
 
-    console.log("Book updated", response);
-    return res.status(200).json({ message: "Book updated", data: response });
+    console.log("Book updated");
+    return res.status(200).json({ message: "Book updated" });
   } catch (error) {
     console.error("Book updation failed", error);
     return res
@@ -162,10 +158,10 @@ export const getBookById = async (req, res) => {
     const id = req.params.id;
     const getBook = await Blog.findById(id);
     if (!getBook) {
-      console.log("Book fetch failed ", getBook);
+      console.log("Book fetch failed ");
       return res.status(404).json({ message: "Book fetch failed" });
     }
-    console.log("Book fetched", getBook);
+    console.log("Book fetched");
     return res.status(200).json({ data: getBook, userId: req.user.id });
   } catch (error) {
     console.log("Book fetch failed ", error);
