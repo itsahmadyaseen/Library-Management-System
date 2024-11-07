@@ -1,7 +1,6 @@
 /* eslint-disable react/no-unescaped-entities */
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-// import axiosInstance from "../axiosInstance";
 import axios from "axios";
 
 const Login = () => {
