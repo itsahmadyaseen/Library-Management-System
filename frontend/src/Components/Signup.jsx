@@ -18,7 +18,10 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
-      await axios.post("http://localhost:5000/api/v1/users/register", formData);
+      await axios.post(
+        "https://read-space-nine.vercel.app/api/v1/users/register",
+        formData
+      );
 
       console.log("User signed up");
       navigate("/login");
